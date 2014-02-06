@@ -1,0 +1,64 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<?php echo $this->headTitle('ZF2 '. $this->translate('Phass Demo'))->setSeparator(' - ')->setAutoEscape(false) ?>
+	<?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                    ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+                    ->prependStylesheet('http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css')
+                    ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+                    ->prependStylesheet($this->basePath() . '/css/all.css')
+                    ->prependStylesheet($this->basePath() . '/css/ie.css', null, array('conditional', 'lt IE 9')) ?>
+
+    <?php echo $this->headScript()->prependFile('//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js')->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+
+</head>
+<body>
+	<div id="wrapper">
+		<div id="content">
+			<div class="c1">
+			<div class="controls">
+				<div class="profile-box">
+					<a href="<?php echo $this->url('oauth2-unauth') ?>" class="btn-on">Unauthenticate</a>
+				</div>
+			</div>
+			<div class="tabs">
+				<div class="tab">
+					<article>
+						<div class="text-section">
+							<h1>Phass Google Glass Framework Demo</h1>
+						</div>
+						<?php echo $this->content; ?>
+					</article>
+				</div>
+			</div>
+		</div>
+	</div>
+		<aside id="sidebar">
+			<ul class="buttons">
+				<li>
+					<a href="/" class="ico4"><span>Timeline</span><em></em></a>
+					<span class="tooltip"><span>Timeline</span></span>
+				</li>
+				<li>
+					<a href="/subscriptions" class="ico6">
+						<span>Subscriptions</span><em></em>
+					</a>
+					<span class="num">11</span>
+					<span class="tooltip"><span>Subscriptions</span></span>
+				</li>
+				<li>
+				    <a href="/contacts" class="ico7"><span>Contacts</span></a>
+				    <span class="tooltip"><span>Contacts</span></span>
+				</li>
+				<li>
+					<a href="/settings" class="ico8"><span>Settings</span><em></em></a>
+					<span class="tooltip"><span>Settings</span></span>
+				</li>
+			</ul>
+			<span class="shadow"></span>
+		</aside>
+	</div>
+</body>
+</html>

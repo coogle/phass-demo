@@ -1,0 +1,77 @@
+<script>
+$(function() {
+    $('#newContact').dialog({
+        autoOpen: false,
+        height: 300,
+        width: 350,
+        modal: true,
+        buttons : {
+            "Create Contact" : function()
+            {
+                $('#subscribeForm').submit();
+            },
+            Cancel : function() {
+                $(this).dialog('close');
+            }
+        }
+    });
+
+    $('#new-contact').button().click(function() {
+        $('#newContact').dialog('open');
+    });
+
+});
+</script>
+
+<div class="text-section">
+    <h2>Your Google Glass App Contacts</h2>
+</div>
+<div class="body-section">
+    <h1>Subscriptions </h1> 
+    <button id="new-contact">Add new Contact</button>
+    <hr/>
+    <?php if($this->contacts->count() > 0):?>
+        <?php foreach($this->contacts as $contact): ?>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Display Name: </th>
+                    <td><?php echo $contact->getDisplayName()?> (<a href="/contacts/delete?id=<?php echo $this->escapeurl($contact->getId())?>">remove</a>)</td>
+                </tr>
+                <tr>
+                    <th>ID: </th>
+                    <td><?php echo $contact->getId()?></td>
+                </tr>
+            </tbody>
+        </table>
+        <?php endforeach; ?>
+    <?php else: ?>
+    <h3>No Conctacts found, why not add one?</h3>
+    <?php endif; ?>
+</div>
+
+
+<div id="newContact" title="Create a new Contact">
+<p>Use the form below to create a new Contact:</p>
+<form id='subscribeForm' action="/contacts/insert" method="POST">
+    <fieldset>
+        <label for="displayName">Displayed Name</label>
+        <input type="text" name="displayName" id="name" class="text ui-widget-content ui-corner-all"/>
+        <label for="acceptCommands-takenote">Take A Note</label>
+        <input type="checkbox" name="acceptCommands[]" id="acceptCommands-takenote" value="TAKE_A_NOTE"/>
+        <label for="acceptCommands-postupdate">Post An Update</label>
+        <input type="checkbox" name="acceptCommands[]" id="acceptCommands-postupdate" value="POST_AN_UPDATE"/>
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" name="phoneNumber" id="phoneNumber" class="text ui-widget-content ui-corner-all"/>
+        <label for="priority">Priority</label>
+        <input type="text" name="priority" id="priority" size="4" class="text ui-widget-content ui-corner-all"/>
+        <label for="speakableName">Speakable Name</label>
+        <input type="text" name="speakableName" id="speakableName" class="text ui-widget-content ui-corner-all"/>
+        <label for="type">Contact Type</label>
+        <select name="type" id="type">
+            <option value="INDIVIDUAL">Individual</option>
+            <option value="GROUP">Group</option>
+        </select>
+    </fieldset>
+</form>
+</div>

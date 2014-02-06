@@ -1,0 +1,35 @@
+{
+    "name": "coogle/phass-demo",
+    "description": "Phass Google Glass Demo Application",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "framework",
+        "zf2",
+        "phass",
+        "googleglass",
+        "google",
+        "glass"
+    ],
+    "authors" : [
+        {
+            "name" : "John Coggeshall",
+            "email" : "john@coggeshall.org",
+            "role" : "developer"
+        }
+    ],
+    "repositories" : [
+        {
+            "url" : "/vagrant/composer-dev/Phass",
+            "type" : "git"
+        }
+    ],
+    "homepage": "http://github.com/coogle/phass-demo/",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.2.*",
+        "coogle/cooglelib" : "dev-master",
+        "coogle/oauth2" : "dev-master",
+        "coogle/logger" : "dev-master",
+        "coogle/phass" : "dev-master"
+    }
+}

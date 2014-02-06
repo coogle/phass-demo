@@ -1,0 +1,74 @@
+<script>
+$(function() {
+    $('#timelineSubscribe').dialog({
+        autoOpen: false,
+        height: 300,
+        width: 350,
+        modal: true,
+        buttons : {
+            "Subscribe" : function()
+            {
+                $('#subscribeForm').submit();
+            },
+            Cancel : function() {
+                $(this).dialog('close');
+            }
+        }
+    });
+
+    $('#subscribe-timeline').button().click(function() {
+        $('#timelineSubscribe').dialog('open');
+    });
+
+    $('#subscribe-location').button().click(function() {
+        window.location.replace("/subscriptions/subscribe?id=locations");
+    });
+});
+</script>
+
+<div class="text-section">
+    <h2>Your Google Glass App Subscriptions</h2>
+</div>
+<div class="body-section">
+    <h1>Subscriptions </h1> 
+    <button id="subscribe-timeline">Subscribe to Timeline Item Events</button>
+    <button id="subscribe-location">Subscribe to Location Events</button>
+    <hr/>
+    <?php if($this->subscriptions->count() > 0):?>
+        <?php foreach($this->subscriptions as $subscription): ?>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Collection: </th>
+                    <td><?php echo $subscription->getCollection()?> (<a href="/subscriptions/unsubscribe?id=<?php echo $this->escapeurl($subscription->getId())?>">unsubscribe</a>)</td>
+                </tr>
+                <tr>
+                    <th>Updated: </th>
+                    <td><?php echo $subscription->getUpdated()->format(DateTime::RFC3339)?></td>
+                </tr>
+                <tr>
+                    <th>User Token</th>
+                    <td><?php echo $subscription->getUserToken()?></td>
+                </tr>
+                <tr>
+                    <th>Callback URL</th>
+                    <td><?php echo $subscription->getCallbackUrl()?></td>
+                </tr>
+            </tbody>
+        </table>
+        <?php endforeach; ?>
+    <?php else: ?>
+    <h3>No subscriptions found, why not add one?</h3>
+    <?php endif; ?>
+</div>
+<div id="timelineSubscribe" title="Subscribe to Timeline Item Events">
+<p>Please select which timeline item events you would like to subscribe to:</p>
+<form id='subscribeForm' action="/subscriptions/subscribe" method="GET">
+<input type="hidden" name="id" value="timeline"/>
+    <input type="checkbox" name="op[]" value="REPLY" checked/>Replies<br/>
+    <input type="checkbox" name="op[]" value="CUSTOM" checked/>Custom<br/>
+    <input type="checkbox" name="op[]" value="DELETE" checked/>Delete<br/>
+    <input type="checkbox" name="op[]" value="SHARE" checked/>Share<br/>
+    <input type="checkbox" name="op[]" value="LAUNCH" checked/>Launch<br/>
+</form>
+</div>

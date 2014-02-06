@@ -1,0 +1,7 @@
+!.gitignore
+.composer
+composer
+coogle
+zendframework
+autoload.php
+bin

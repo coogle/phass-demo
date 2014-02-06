@@ -1,0 +1,122 @@
+<script>
+$(function() {
+    $('#new-item-dialog').dialog({
+        autoOpen : false,
+        height: 300,
+        width: 350,
+        modal: true,
+        buttons : {
+            'Insert Item' : function() {
+                $('#new-item-form').submit();
+            },
+            Cancel : function() {
+                $(this).dialog('close');
+            }
+        }
+    });
+    
+    $('#new-item').button().click(function() {
+        $('#new-item-dialog').dialog('open');
+    });
+
+    $('#new-simple-item').button().click(function() {
+        window.location.replace("/timeline/demo?type=simple");
+    });
+
+    $('#new-image-item').button().click(function() {
+        window.location.replace("/timeline/demo?type=image");
+    });
+
+    $('#new-video-item').button().click(function() {
+        window.location.replace("/timeline/demo?type=video");
+    });
+});
+</script>
+
+<div class="text-section">
+    <h2>Your Google Glass App Timeline</h2>
+</div>
+<div class="body-section">
+    <button id="new-item">Add new Timeline Item</button>
+    <button id="new-simple-item">Add Simple Item</button>
+    <button id="new-image-item">Add Simple Item with Image</button>
+    <button id="new-video-item">Add Streaming Video</button>
+    <hr/>
+    <h1>Timeline Items</h1>
+    <?php if($this->timelineItems->items()->count() > 0): ?>
+        <?php foreach($this->timelineItems->items() as $item): ?>
+        <div class="span4">
+            <table style="border: thin solid black;">
+                <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <td><a href="/timeline/view/<?php echo $item->getId()?>"><?php echo substr($item->getId(), 0, 25) . "..."?></a></td>
+                    </tr>
+                    <tr>
+                        <th>Text</th>
+                        <td><?php echo $this->escapehtml($item->getText())?></td>
+                    </tr>
+                    <tr>
+                        <th>HTML</th>
+                        <td><?php echo $this->escapehtml($item->getHtml())?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <?php endforeach;?>
+    <?php else: ?>
+    <h3>No Timeline Items found, why not add one?</h3>
+    <?php endif; ?>
+</div>
+
+<div id="new-item-dialog" title="Insert Timeline Item">
+    <p>Use the form below to insert a timeline Item.</p>
+    <form id="new-item-form" action="/timeline/insert" method="POST">
+        <fieldset>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" class="text ui-widget-content ui-corner-all"/>
+            
+            <label for="bundleId">Bundle ID</label>
+            <input type="text" name="bundleId" id="bundleId" class="text ui-widget-content ui-corner-all"/>
+            
+            <label for="canonicalUrl">Canonical URL</label>
+            <input type="text" name="canonicalUrl" id="canonicalUrl" class="text ui-widget-content ui-corner-all"/>
+            
+            <label for="creator">Creator</label>
+            <select name="creator" id="creator">
+            </select>
+            
+            <label for="html">HTML Content</label>
+            <textarea rows="4" cols="20" name="html" id="html"></textarea>
+            
+            <label for="text">Text Content</label>
+            <textarea rows="4" cols="20" name="text" id="text"></textarea>
+            
+            <input type="hidden" name="isBundleCover" value="0"/>
+            <label for="isBundleCover">Is Bundle Cover</label>
+            <input type="checkbox" name="isBundleCover" id="isBundleCover" value="1"/>
+            
+            <label for="action-reply">Reply</label>
+            <input type="checkbox" id="action-reply" name="menuItems[]" value="REPLY"/>
+            
+            <label for="action-reply-all">Reply All</label>
+            <input type="checkbox" name="menuItems[]" id="action-reply-all" value="REPLY_ALL"/>
+            
+            <label for="action-delete">Delete</label>
+            <input type="checkbox" name="menuItems[]" value="DELETE" id="action-delete"/>
+            
+            <label for="action-share">Share</label>
+            <input type="checkbox" name="menuItems[]" value="SHARE" id="action-share"/>
+            
+            <label for="action-read-aloud">Read Aloud</label>
+            <input type="checkbox" name="menuItems[]" value="READ_ALOUD" id="action-read-aloud"/>
+            
+            <label for="action-voice-call">Voice Call</label>
+            <input type="checkbox" name="menuItems[]" value="VOICE_CALL" id="action-voice-call"/>
+            
+            <label for="action-toggle-pinned">Toggle Pinned</label>
+            <input type="checkbox" name="menuItems[]" value="TOGGLE_PINNED" id="action-toggle-pinned"/>
+            
+        </fieldset>
+    </form>
+</div>
