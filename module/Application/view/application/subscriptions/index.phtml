@@ -65,10 +65,8 @@ $(function() {
 <p>Please select which timeline item events you would like to subscribe to:</p>
 <form id='subscribeForm' action="/subscriptions/subscribe" method="GET">
 <input type="hidden" name="id" value="timeline"/>
-    <input type="checkbox" name="op[]" value="REPLY" checked/>Replies<br/>
-    <input type="checkbox" name="op[]" value="CUSTOM" checked/>Custom<br/>
-    <input type="checkbox" name="op[]" value="DELETE" checked/>Delete<br/>
-    <input type="checkbox" name="op[]" value="SHARE" checked/>Share<br/>
-    <input type="checkbox" name="op[]" value="LAUNCH" checked/>Launch<br/>
+    <input type="checkbox" name="op[]" value="<?php echo \Phass\Entity\Subscription::UPDATE ?>" checked/>Updates<br/>
+    <input type="checkbox" name="op[]" value="<?php echo \Phass\Entity\Subscription::DELETE ?>" checked/>Deletes<br/>
+    <input type="checkbox" name="op[]" value="<?php echo \Phass\Entity\Subscription::INSERT ?>" checked/>Inserts<br/>
 </form>
 </div>

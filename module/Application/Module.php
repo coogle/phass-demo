@@ -16,6 +16,7 @@ use Phass\PhassEvents as Events;
 use Phass\Service\GlassService;
 use Application\Db\Entity\Credential;
 use OAuth2\OAuth2Events;
+use Zend\Log\Logger;
 
 class Module
 {
@@ -39,15 +40,20 @@ class Module
          * context during a notification callback so that we can do things like insert timeline items when we get a
          * subscription ping.
          */
-        $sharedEventManager->attach(GlassService::EVENT_IDENTIFIER, Events::EVENT_SUBSCRIPTION_RESOLVE_USER, function($event) use ($application) {
+        $sharedEventManager->attach(GlassService::EVENT_IDENTIFIER, Events::EVENT_SUBSCRIPTION_RESOLVE_USER, function($event) use ($application, $eventManager) {
             $userToken = $event->getParam('userToken', null);
             $tokenType = $event->getParam('tokenType', null);
             
+            $eventManager->trigger('log', null, array('message' => "Handling EVENT_SUBSCRIPTION_RESOLVE_USER", 'priority' => Logger::DEBUG));
+            
             if(is_null($userToken) || is_null($tokenType)) {
+            	$eventManager->trigger('log', null, array('message' => "Event Trigger but user token and token type not found", 'priority' => Logger::ERR));
                 throw new \UnexpectedValueException("Event triggered but user token and token type not found");
             }
             
             $credentialsTable = $application->getServiceManager()->get('Application\Db\Credentials');
+            
+            $eventManager->trigger('log', null, array('message' => "Got Credentials Table", 'priority' => Logger::DEBUG));
             
             $user = null;
             
@@ -59,17 +65,26 @@ class Module
                 case GlassService::COLLECTION_TIMELINE:
                     $user = $credentialsTable->findByTimelineGuid($userToken);
                     break;
+                default:
+                    $eventManager->trigger('log', null, array('message' => "Could not identify token type", 'priority' => Logger::DBEUG));
+                    break;
             }
             
-            if(is_null($user)) {
+            $eventManager->trigger('log', null, array('message' => "Looked for User", 'priority' => Logger::DEBUG));
+            
+            if(!$user instanceof Credential) {
+            	$eventManager->trigger('log', null, array('message' => "User not found, returning null", 'priority' => Logger::DEBUG));
                 return;
             }
+            
+            $eventManager->trigger('log', null, array('message' => "Found User", 'priority' => Logger::DEBUG));
             
             $token = $application->getServiceManager()->get('OAuth2\Token');
             
             $token->setAccessToken($user->getAuthToken())
                   ->setRefreshToken($user->getRefreshToken());
                   
+            $eventManager->trigger('log', null, array('message' => "Returning User's Token", 'priority' => Logger::DEBUG));
             return $token;
         });
         
@@ -119,7 +134,7 @@ class Module
         return array(
             'factories' => array(
                 'Application\Db\Notifications' => 'Application\Db\Table\NotificationTable',
-                'Application\Db\Credentials' => 'Application\Db\Table\CredentialsTable',
+                'Application\Db\Credentials' => 'Application\Db\Table\CredentialsTable'
             )
         );
     }

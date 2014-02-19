@@ -95,12 +95,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/coogle/OAuth2.git",
-                "reference": "225bf5d91d7490a42fbadb8203f2cab5eb220e50"
+                "reference": "5269dfda850c133298fd4e5c99412941a496f7ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coogle/OAuth2/zipball/225bf5d91d7490a42fbadb8203f2cab5eb220e50",
-                "reference": "225bf5d91d7490a42fbadb8203f2cab5eb220e50",
+                "url": "https://api.github.com/repos/coogle/OAuth2/zipball/5269dfda850c133298fd4e5c99412941a496f7ae",
+                "reference": "5269dfda850c133298fd4e5c99412941a496f7ae",
                 "shasum": ""
             },
             "require": {
@@ -130,7 +130,7 @@
             ],
             "description": "OAuth2 module for Zend Framework 2",
             "homepage": "http://www.github.com/coogle/OAuth2",
-            "time": "2014-01-31 01:46:43"
+            "time": "2014-02-06 00:04:21"
         },
         {
             "name": "coogle/phass",

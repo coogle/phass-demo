@@ -6,6 +6,7 @@ return array(
         'CoogleLib',
         'OAuth2',
         'Phass',
+        'Meme',
         'Application',
     ),
 

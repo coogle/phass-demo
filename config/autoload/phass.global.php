@@ -3,7 +3,7 @@
 return array(
     'phass' => array(
         'applicationName' => "Phass Demo Application",
-        'development' => (APPLICATION_ENV == "development"),
+        'development' => true,
         'subscriptionController' => 'Application\Controller\GlassSubscriptions'
     ),
     'controllers' => array(

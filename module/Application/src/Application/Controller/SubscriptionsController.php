@@ -39,7 +39,7 @@ class SubscriptionsController extends AbstractController
         $guid = $this->getGlassService()->subscribe($id, $ops);
         
         $credentialsTable = $this->getServiceLocator()->get('Application\Db\Credentials');
-        $token = $this->getServiceLocator()->get('Phass\OAuth2\Token');
+        $token = $this->getServiceLocator()->get('OAuth2\Token');
         
         $creds = $credentialsTable->findByUserId($token->getJwt()->getUniqueId());
         
